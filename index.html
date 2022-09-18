@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CRUD</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+    <h2 class="text-center my-5 titulo">Administrador de inventario</h2>
+    <div class="container mt-5 p-5">
+        <div id="contenido" class="row">
+            <div class="col-md-6 agregar-cita">
+                <form id="nuevo-producto">
+                    <legend class="mb-4">Datos del Producto</legend>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-lg-4 col-form-label">Nombre:</label>
+                        <div class="col-sm-8 col-lg-8">
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Producto">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-lg-4 col-form-label">Codigo:</label>
+                        <div class="col-sm-8 col-lg-8">
+                            <input type="text" id="codigo" name="codigo" class="form-control"  placeholder="Codigo">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-lg-4 col-form-label">Costo:</label>
+                        <div class="col-sm-8 col-lg-8">
+                            <input type="number" id="costo" name="costo" class="form-control"  placeholder="Costo">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-lg-4 col-form-label">Cantidad:</label>
+                        <div class="col-sm-8 col-lg-8">
+                            <input type="number" id="cantidad" name="cantidad" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <button type="submit" class="btn btn-success w-100 d-block">Añadir Producto</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 col-lg-4 col-form-label">Codigo</label>
+                <div class="col-sm-8 col-lg-8">
+                    <input type="text" id="eliminar-input" class="form-control mb-4">
+                    <button id="eliminar" class="btn btn-danger w-100 d-block">Eliminar</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-lg-8">
+                    <button id="buscar" class="btn btn-success w-100 d-block">Buscar</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-lg-8">
+                    <button id="listar" class="btn btn-warning w-100 d-block">Listar</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-lg-8">
+                    <button id="listar-inverso" class="btn btn-warning w-100 d-block">Listar Inverso</button>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+                <h2 id="administra" class="mb-4">INVENTARIO</h2>
+                <ul id="productos" class="list-group"></ul>
+            </div>
+        </div> <!--.row-->
+    </div><!--.container-->
+
+    <script src="app.js"></script>
+
+</body>
+</html>
