@@ -29,6 +29,21 @@ function datosProducto(e) {
     productoObj[e.target.name] = e.target.value
 }
 
+class UI {
+    mostrarProductos(inventario) {
+        limpiarHTML();
+        for(let i = 0; i < inventario.length; i++) {
+
+            const li = document.createElement('li');
+            li.innerHTML = `Nombre: ${inventario[i].nombre} <br>
+                            Codigo: ${inventario[i].codigo} <br>
+                            Cantidad: ${inventario[i].cantidad} <br>
+                            Costo: ${inventario[i].costo} <br>`
+            productos.appendChild(li);
+        }
+    }
+}
+const ui = new UI();
 
 class Inventario {
     constructor() {
@@ -38,11 +53,10 @@ class Inventario {
 
     addProducto(producto) {
         this.productos[this.productos.length] =  producto
-
+        return producto
     }
 
     eliminarProducto(codigo) {
-        // this.productos = this.productos.filter( producto => producto.id !== codigo)
         let isFound = false;
         for(let i = 0; i < this.productos.length; i++) {
             if(this.productos[i].codigo == codigo) {
@@ -56,23 +70,20 @@ class Inventario {
         if(isFound) {
             this.productos.length -= 1;
         }
+    }
 
-        // for(let i = posicion; i < this.productos.length - 1; i++){
-        //     this.productos[i]= this.productos[i+1];
-        // }
-
-        // this.productos.length -= 1;
+    listar() {
+        ui.mostrarProductos(this.productos)
+        return this.productos
     }
 
     listarInverso() {
-        const iterations = Math.floor(this.productos.length / 2)
-        for(let i = 0, x = 1 ; x <= iterations; i++, x++) {
-            let temp = this.productos[this.productos.length - x];
-            this.productos[this.productos.length - x] = this.productos[i]
-            this.productos[i] = temp;
+        let invertido = []
+        for(let i = this.productos.length - 1, x = 0; i >= 0 ; i--, x++) {
+            invertido[i] = this.productos[x]
         }
-        listar()
-        syncStorage()
+        ui.mostrarProductos(invertido)
+        return invertido
     }
 
     buscar(codigo) {
@@ -103,37 +114,15 @@ function eventListeners() {
 }
 
 function listar() {
-    ui.mostrarProductos(inventario.productos)
+    inventario.listar()
 }
 
-class UI {
-    mostrarProductos(inventario) {
-        limpiarHTML();
-        for(let i = 0; i < inventario.length; i++) {
-
-            const li = document.createElement('li');
-            li.innerHTML = `Nombre: ${inventario[i].nombre} <br>
-                            Codigo: ${inventario[i].codigo} <br>
-                            Cantidad: ${inventario[i].cantidad} <br>
-                            Costo: ${inventario[i].costo} <br>`
-            productos.appendChild(li);
-        }
-    }
-}
-const ui = new UI();
 class Producto {
     constructor(codigo, nombre, cantidad, costo) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.costo = costo;
-    }
-
-    acoplar() {
-
-        inventario.addProducto({...productoObj})
-        ui.mostrarProductos(inventario.productos)
-        reiniciarObj();
     }
 }
 
@@ -147,7 +136,9 @@ function nuevoProducto(e) {
     } else {
         let producto = new Producto(codigo, nombre, costo, cantidad);
         inventario.addProducto(producto)
-        producto.acoplar()
+        inventario.addProducto({...productoObj})
+        ui.mostrarProductos(inventario.productos)
+        reiniciarObj();
         form.reset();
         syncStorage()
 
