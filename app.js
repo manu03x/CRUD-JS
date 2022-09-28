@@ -30,17 +30,13 @@ function datosProducto(e) {
 }
 
 class UI {
-    mostrarProductos(inventario) {
-        limpiarHTML();
-        for(let i = 0; i < inventario.length; i++) {
-
+    mostrarProductos(producto) {
             const li = document.createElement('li');
-            li.innerHTML = `Nombre: ${inventario[i].nombre} <br>
-                            Codigo: ${inventario[i].codigo} <br>
-                            Cantidad: ${inventario[i].cantidad} <br>
-                            Costo: ${inventario[i].costo} <br>`
+            li.innerHTML = `Nombre: ${producto.nombre} <br>
+                            Codigo: ${producto.codigo} <br>
+                            Cantidad: ${producto.cantidad} <br>
+                            Costo: ${producto.costo} <br>`
             productos.appendChild(li);
-        }
     }
 }
 const ui = new UI();
@@ -53,7 +49,6 @@ class Inventario {
 
     addProducto(producto) {
         this.productos[this.productos.length] =  producto
-        return producto
     }
 
     eliminarProducto(codigo) {
@@ -73,17 +68,16 @@ class Inventario {
     }
 
     listar() {
-        ui.mostrarProductos(this.productos)
-        return this.productos
+        for (let i = 0; i < this.productos.length; i++) {
+            ui.mostrarProductos(this.productos[i])
+        }
     }
 
     listarInverso() {
         let invertido = []
-        for(let i = this.productos.length - 1, x = 0; i >= 0 ; i--, x++) {
-            invertido[i] = this.productos[x]
+        for(let i = this.productos.length - 1; i >= 0 ; i--) {
+            ui.mostrarProductos(this.productos[i])
         }
-        ui.mostrarProductos(invertido)
-        return invertido
     }
 
     buscar(codigo) {
@@ -114,6 +108,7 @@ function eventListeners() {
 }
 
 function listar() {
+    limpiarHTML();
     inventario.listar()
 }
 
@@ -136,8 +131,6 @@ function nuevoProducto(e) {
     } else {
         let producto = new Producto(codigo, nombre, costo, cantidad);
         inventario.addProducto(producto)
-        inventario.addProducto({...productoObj})
-        ui.mostrarProductos(inventario.productos)
         reiniciarObj();
         form.reset();
         syncStorage()
@@ -175,6 +168,7 @@ function getStorageData() {
 }
 
 function listarInverso() {
+    limpiarHTML();
     inventario.listarInverso();
 }
 
